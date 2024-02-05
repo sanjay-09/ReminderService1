@@ -1,28 +1,43 @@
 const cron=require("node-cron");
 const sender=require("../config/emailConfig");
-const emailService=require("../services/email-service");
+const reminderService=require("../services/reminder-service")
+const reminderServiceObj=new reminderService();
 
 const setUpJob=()=>{
     cron.schedule("*/1 * * * *",async()=>{
-        const response=await emailService.fetchingPendingEmails();
+        const response=await reminderServiceObj.fetchPendingEmail();
         response.forEach((email)=>{
+            console.log("inside");
+            const time=new Date();
+           console.log(email.departureTime.getDate()-1==time.getDate());
+            if(email.departureTime.getDate()-1==time.getDate()){
+                console.log("ok");
             sender.sendMail({
-                to:email.receipentEmail,
-                subject:email.subject,
-                text:email.content
+                to:email.Email,
+                subject:"Checking OPEN FOR YOUR FLIGHT",
+                text:`Checking OPEN FOR YOUR FLIGHT`
 
             },async(err,data)=>{
                 if(err){
                     console.log(err);
                 }
                 else{
-                    console.log("success");
-                    await emailService.update(email.id,{status:"success"})
+                   
+                   
+                    if(email.Reminder==2){
+                        console.log(email.Reminder);
+                        await reminderServiceObj.update(email.id,"update status");
+
+                    }
+                    else{
+                        await reminderServiceObj.update(email.id,"update reminder");
+                    }
                 }
             }
 
             )
-        })
+        }
+    })
         
         
     })
