@@ -70,7 +70,7 @@ class ReminderService{
     async fetchPendingEmail(){
         try{
             const response=await this.ReminderTimeRespository.get();
-            console.log(response);
+          
             return response;
 
 

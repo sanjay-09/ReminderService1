@@ -7,11 +7,11 @@ const setUpJob=()=>{
     cron.schedule("*/1 * * * *",async()=>{
         const response=await reminderServiceObj.fetchPendingEmail();
         response.forEach((email)=>{
-            console.log("inside");
+        
             const time=new Date();
            console.log(email.departureTime.getDate()-1==time.getDate());
             if(email.departureTime.getDate()-1==time.getDate()){
-                console.log("ok");
+                
             sender.sendMail({
                 to:email.Email,
                 subject:"Checking OPEN FOR YOUR FLIGHT",
@@ -25,7 +25,7 @@ const setUpJob=()=>{
                    
                    
                     if(email.Reminder==2){
-                        console.log(email.Reminder);
+                       
                         await reminderServiceObj.update(email.id,"update status");
 
                     }
