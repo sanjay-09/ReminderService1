@@ -5,6 +5,7 @@ const reminderServiceObj=new reminderService();
 
 const setUpJob=()=>{
     cron.schedule("*/1 * * * *",async()=>{
+        console.log("h");
         const response=await reminderServiceObj.fetchPendingEmail();
         response.forEach((email)=>{
         

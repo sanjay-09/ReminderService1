@@ -27,12 +27,13 @@ const createChannel=async()=>{
 
 const subscriber=async(channel,REMINDER_BINDING_KEY)=>{
     try{
-        
+        console.log("subscriber");
         const applicationQueue=await channel.assertQueue("QUEUE_NAME");
         await channel.bindQueue(applicationQueue.queue,EXCHANGE_NAME,REMINDER_BINDING_KEY);
         channel.consume(applicationQueue.queue,async(msg)=>{
         console.log("received data");
         const data=JSON.parse(msg.content.toString());
+        console.log(data);
       
         reminderServiceObj.BookingConfirmation(data)
       

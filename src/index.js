@@ -21,9 +21,9 @@ const setUpAndStartServer=async(req,res)=>{
         console.log(`server is listening on the PORT${PORT}`)
         setUpJobs();
       
-        // const channel=await createChannel();
+        const channel=await createChannel();
         
-        // subscriber(channel,REMINDER_BINDING_KEY);
+        subscriber(channel,REMINDER_BINDING_KEY);
         
        
     })

@@ -1,5 +1,6 @@
 const reminderTimeRepositor=require("../repository/reminder-repository");
 const sender=require("../config/emailConfig");
+const axios=require("axios");
 
 class ReminderService{
     constructor(){
@@ -20,9 +21,9 @@ class ReminderService{
             throw err;
         }
     }
-    async BookingConfirmation(){
+    async BookingConfirmation(data){
         try{
-            const flightDetails=await axios.get(`http://localhost:3000/api/v1/flight/${data.flightId}`);
+            const flightDetails=await axios.get(`http://localhost:3000/flightService/api/v1/flight/${data.flightId}`);
            
 
           
@@ -31,8 +32,8 @@ class ReminderService{
             const sourceAirportId=flightDetails.data.data.depatureAirportId;
             const arrivalAiportId=flightDetails.data.data.destinationAirportId;
 
-            const sourceAirport=await axios.get(`http://localhost:3000/api/v1/airport/${sourceAirportId}`);
-            const destinationAirport=await axios.get(`http://localhost:3000/api/v1/airport/${arrivalAiportId}`);
+            const sourceAirport=await axios.get(`http://localhost:3000/flightService/api/v1/airport/${sourceAirportId}`);
+            const destinationAirport=await axios.get(`http://localhost:3000/flightService/api/v1/airport/${arrivalAiportId}`);
            const source= sourceAirport.data.data.name;
            const destination=destinationAirport.data.data.name;
             this.sendBasicMail("reminderbookingservice@gmail.com",data.email,"Booking Confimration",`Your flight booking is from ${source} to ${destination} is confirmed.
@@ -43,9 +44,9 @@ class ReminderService{
             throw err;
         }
     }
-    async NotificationUpdate(){
+    async NotificationUpdate(data){
         try{
-            const flightDetails=await axios.get(`http://localhost:3000/api/v1/flight/${data.flightId}`);
+            const flightDetails=await axios.get(`http://localhost:3000/flightService/api/v1/flight/${data.flightId}`);
            
 
             const email=data.email
