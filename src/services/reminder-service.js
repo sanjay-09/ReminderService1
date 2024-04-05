@@ -47,6 +47,7 @@ class ReminderService{
     }
     async NotificationUpdate(data){
         try{
+            console.log("Notification UPDATE")
             const flightDetails=await axios.get(`${Flight_Search}/flightService/api/v1/flight/${data.flightId}`);
            
 
